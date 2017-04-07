@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import NCMB
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        // mbのAPIキー
+        NCMB.setApplicationKey("644a6ccf8f9fa7c5f792d301adf624a7fe6d7455996b92de01a46037a84723a5", clientKey: "4c5771973e8c4818e5296e2aed38d2325e0fdfaad584b5560200830eaf88add6")
+        
+        //twitterのAPIキー
+        NCMBTwitterUtils.initialize(withConsumerKey: "UVGEnYxLfLudJlCEVwcMDHo2C", consumerSecret: "Ot5yjc9N7jTxYLCa52nV8eRYYVvcByXCsqMZMj0Rb7NVYeyyir")
         return true
     }
 
