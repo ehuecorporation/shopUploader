@@ -9,6 +9,20 @@
 import UIKit
 import NCMB
 
+public struct shop {
+    
+    public var objectID: String = ""
+    public var shopName: String = ""
+    public var shopNumber: Int = 0
+    public var shopLat: Double = 0
+    public var shopLon: Double = 0
+    public var shopGeo: NCMBGeoPoint = NCMBGeoPoint()
+    public var openHours: String = ""
+    public var restDay: String = ""
+    
+}
+
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var nowIndex: UITextField!
@@ -71,7 +85,9 @@ class ViewController: UIViewController {
         loadView()
         viewDidLoad()
     }
+    
     var index = 1
+    var firstAppear = true
     
     var lon = 0.0
     var lat = 0.0
@@ -98,9 +114,24 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
+        
+        if firstAppear {
+            print("here")
+            findIndex()
+            firstAppear = false
+        } else {
+            showShopData(index)
+        }
+        
         nowIndex.text = index.description
-        print(index)
-        print(dataList[index])
+    }
+
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func showShopData(_ index: Int) {
         let dataDetail = dataList[index].components(separatedBy:",")
         var openHours_content = dataDetail[3]
         let startIndex = openHours_content.index(openHours_content.startIndex, offsetBy: 0)
@@ -118,10 +149,53 @@ class ViewController: UIViewController {
         self.lat = Double(dataDetail[1])!
         self.lon = Double(dataDetail[2])!
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    func findIndex() {
+        let query: NCMBQuery = NCMBQuery(className: "restaurantList")
+        query.order(byDescending: "number")
+        
+        var tmpArray = [shop]()
+        print("find index")
+        
+        query.findObjectsInBackground({(objects,  error) in
+        
+            if error == nil {
+                if let response = objects {
+                    if (response.count) > 0 {
+                        
+                        for i in 0 ..< 1 {
+                            let targetMemoData: AnyObject = response[i] as AnyObject
+                            var shopData = shop()
+                            shopData.objectID = (targetMemoData.object(forKey: "objectId") as? String)!
+                            shopData.shopName = (targetMemoData.object(forKey: "shopName") as? String)!
+                            shopData.shopNumber = (targetMemoData.object(forKey: "number") as? Int)!
+                            shopData.openHours = (targetMemoData.object(forKey: "openHours") as? String)!
+                            shopData.restDay = (targetMemoData.object(forKey: "restDay") as? String)!
+                            shopData.shopGeo = (targetMemoData.object(forKey: "geoPoint") as? NCMBGeoPoint)!
+                            shopData.shopLon = shopData.shopGeo.longitude
+                            shopData.shopLat = shopData.shopGeo.latitude
+                            print(shopData)
+                            tmpArray.append(shopData)
+                            self.index = shopData.shopNumber + 1
+                            self.loadView()
+                            self.viewDidLoad()
+                        }
+                    } else {
+                        print("there are no restaurant data")
+                    }// response.count end
+                } else {
+                    print("通信エラー")
+                }// opt bind objects
+            } else {
+                var message = "Unknown error."
+                if let description = error?.localizedDescription {
+                        message = description
+                }
+                print(message)
+                return
+            } // errors end
+                
+        }) // findObjects end
     }
 
 }
