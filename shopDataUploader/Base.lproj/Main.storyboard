@@ -227,6 +227,7 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="vVM-uw-Lm3" secondAttribute="trailing" constant="10" id="10S-iM-oye"/>
                             <constraint firstItem="unk-R4-sJ3" firstAttribute="leading" secondItem="gYL-8b-Jgw" secondAttribute="trailing" constant="20" id="2cW-0t-wJb"/>
@@ -267,6 +268,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-225" y="37"/>
         </scene>
     </scenes>
 </document>

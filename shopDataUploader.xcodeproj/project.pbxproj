@@ -245,7 +245,7 @@
 				TargetAttributes = {
 					2FB7EF741E83C849009D76DF = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 2Q2LSKG99P;
+						DevelopmentTeam = EW4N3X2N4X;
 						ProvisioningStyle = Automatic;
 					};
 					2FB7EF881E83C849009D76DF = {
@@ -607,8 +607,9 @@
 			baseConfigurationReference = BACAD16E6B049894D07D3388 /* Pods-shopDataUploader.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2Q2LSKG99P;
+				DEVELOPMENT_TEAM = EW4N3X2N4X;
 				INFOPLIST_FILE = shopDataUploader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ehue.shopDataUploader;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -621,8 +622,9 @@
 			baseConfigurationReference = 8D4C47133FC6509B6B86394D /* Pods-shopDataUploader.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 2Q2LSKG99P;
+				DEVELOPMENT_TEAM = EW4N3X2N4X;
 				INFOPLIST_FILE = shopDataUploader/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ehue.shopDataUploader;
 				PRODUCT_NAME = "$(TARGET_NAME)";

@@ -23,12 +23,16 @@ public struct shop {
 }
 
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UITextFieldDelegate{
 
     @IBOutlet weak var nowIndex: UITextField!
     @IBOutlet weak var shopName: UITextField!
     @IBOutlet weak var openHours: UITextView!
     @IBOutlet weak var restDay: UITextView!
+    
+    @IBAction func hyde(_ sender: UITapGestureRecognizer) {
+        
+    }
     
     @IBAction func back(_ sender: UIButton) {
         index -= 1
@@ -47,7 +51,7 @@ class ViewController: UIViewController {
         let targetLat = self.lat
         let number = self.index
         
-        var geoPoint = NCMBGeoPoint()
+        let geoPoint = NCMBGeoPoint()
         geoPoint.latitude = targetLat
         geoPoint.longitude = targetLon
         
@@ -69,9 +73,8 @@ class ViewController: UIViewController {
         } else {
             print("failure save data.\(saveError)")
         }
-        
-        loadView()
-        viewDidLoad()
+    
+        next(UIButton.init())
     }
     
     @IBAction func next(_ sender: UIButton) {
