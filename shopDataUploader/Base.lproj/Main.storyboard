@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -225,6 +224,30 @@
                                     <action selector="go:" destination="BYZ-38-t0r" eventType="touchUpInside" id="UiV-Ic-Fjf"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Paw-Jk-2oy">
+                                <rect key="frame" x="17.5" y="560" width="100" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Pcy-Us-pY6"/>
+                                    <constraint firstAttribute="height" constant="50" id="WqZ-iq-9Mc"/>
+                                </constraints>
+                                <state key="normal" title="リロード">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                        <color key="value" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                        <real key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="5"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="relod:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YAW-kn-xvR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
@@ -232,6 +255,7 @@
                             <constraint firstAttribute="trailing" secondItem="vVM-uw-Lm3" secondAttribute="trailing" constant="10" id="10S-iM-oye"/>
                             <constraint firstItem="unk-R4-sJ3" firstAttribute="leading" secondItem="gYL-8b-Jgw" secondAttribute="trailing" constant="20" id="2cW-0t-wJb"/>
                             <constraint firstItem="D9x-Di-jDx" firstAttribute="top" secondItem="EGl-ib-Njb" secondAttribute="bottom" constant="15" id="69F-OA-Aab"/>
+                            <constraint firstItem="Paw-Jk-2oy" firstAttribute="centerY" secondItem="VXq-lE-lu6" secondAttribute="centerY" id="7BC-m0-60G"/>
                             <constraint firstItem="t75-75-cz1" firstAttribute="leading" secondItem="unk-R4-sJ3" secondAttribute="trailing" constant="30" id="8ZQ-qC-anU"/>
                             <constraint firstItem="rfJ-mN-yYy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="Dhr-mu-qgh"/>
                             <constraint firstItem="D9x-Di-jDx" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="EdM-zT-g8c"/>
@@ -252,6 +276,7 @@
                             <constraint firstItem="knC-hs-OHS" firstAttribute="top" secondItem="vVM-uw-Lm3" secondAttribute="bottom" constant="15" id="hIg-NR-MLg"/>
                             <constraint firstItem="knC-hs-OHS" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="iEr-8s-iBV"/>
                             <constraint firstItem="rfJ-mN-yYy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="30" id="jUV-kl-IjX"/>
+                            <constraint firstItem="VXq-lE-lu6" firstAttribute="leading" secondItem="Paw-Jk-2oy" secondAttribute="trailing" constant="20" id="lUC-8V-RJd"/>
                             <constraint firstItem="vVM-uw-Lm3" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="mKQ-K6-RWA"/>
                             <constraint firstItem="xi0-k3-gt3" firstAttribute="leading" secondItem="VXq-lE-lu6" secondAttribute="trailing" constant="30" id="s9a-4L-4PC"/>
                             <constraint firstItem="gYL-8b-Jgw" firstAttribute="centerY" secondItem="unk-R4-sJ3" secondAttribute="centerY" id="tDU-JW-hjW"/>

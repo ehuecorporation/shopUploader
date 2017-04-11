@@ -30,10 +30,10 @@ class ViewController: UIViewController, UITextFieldDelegate{
     @IBOutlet weak var openHours: UITextView!
     @IBOutlet weak var restDay: UITextView!
     
-    @IBAction func hyde(_ sender: UITapGestureRecognizer) {
-        
+    @IBAction func relod(_ sender: UIButton) {
+        loadView()
+        viewDidLoad()
     }
-    
     @IBAction func back(_ sender: UIButton) {
         index -= 1
         if index == 0 {
@@ -59,21 +59,41 @@ class ViewController: UIViewController, UITextFieldDelegate{
         
         var saveError: NSError? = nil
         
-        let obj: NCMBObject = NCMBObject(className: "restaurantList")
-        obj.setObject(targetShopName, forKey: "shopName")
-        obj.setObject(targetOpenHours, forKey: "openHours")
-        obj.setObject(targetRestDay, forKey: "restDay")
-        obj.setObject(geoPoint, forKey: "geoPoint")
-        obj.setObject(number, forKey: "number")
-        obj.save(&saveError)
-        
+        if index <= currentMaxIndex {
+            //既存データの更新
+            var saveError: NSError? = nil
+            let obj: NCMBObject = NCMBObject(className: "restaurantList")
+            obj.objectId = self.tmpShop.objectID
+            obj.fetchInBackground({
+                (error)
+                in
+                
+                if (error == nil) {
+                    obj.setObject(targetShopName, forKey: "shopName")
+                    obj.setObject(targetOpenHours, forKey: "openHours")
+                    obj.setObject(targetRestDay, forKey: "restDay")
+                    obj.setObject(geoPoint, forKey: "geoPoint")
+                    obj.setObject(number, forKey: "number")
+                    obj.save(&saveError)
+                }
+            })
+        } else {
+            // 新規登録
+            let obj: NCMBObject = NCMBObject(className: "restaurantList")
+            obj.setObject(targetShopName, forKey: "shopName")
+            obj.setObject(targetOpenHours, forKey: "openHours")
+            obj.setObject(targetRestDay, forKey: "restDay")
+            obj.setObject(geoPoint, forKey: "geoPoint")
+            obj.setObject(number, forKey: "number")
+            obj.save(&saveError)
+            currentMaxIndex += 1
+        }
         
         if saveError == nil {
             print("success save data.")
         } else {
             print("failure save data.\(saveError)")
         }
-    
         next(UIButton.init())
     }
     
@@ -90,7 +110,9 @@ class ViewController: UIViewController, UITextFieldDelegate{
     }
     
     var index = 1
+    var currentMaxIndex = 1
     var firstAppear = true
+    var tmpShop = shop()
     
     var lon = 0.0
     var lat = 0.0
@@ -119,11 +141,14 @@ class ViewController: UIViewController, UITextFieldDelegate{
         }
         
         if firstAppear {
-            print("here")
             findIndex()
             firstAppear = false
         } else {
-            showShopData(index)
+            if index <= currentMaxIndex {
+                findShopData(index)
+            } else {
+                showShopData(index)
+            }
         }
         
         nowIndex.text = index.description
@@ -144,7 +169,9 @@ class ViewController: UIViewController, UITextFieldDelegate{
         } else {
             openHours_content.remove(at: startIndex)
         }
-        let endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
+        var endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
+        openHours_content.remove(at: endIndex)
+        endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
         openHours_content.remove(at: endIndex)
         shopName.text = dataDetail[0]
         openHours.text = openHours_content
@@ -180,6 +207,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
                             print(shopData)
                             tmpArray.append(shopData)
                             self.index = shopData.shopNumber + 1
+                            self.currentMaxIndex = shopData.shopNumber
                             self.loadView()
                             self.viewDidLoad()
                         }
@@ -198,6 +226,53 @@ class ViewController: UIViewController, UITextFieldDelegate{
                 return
             } // errors end
                 
+        }) // findObjects end
+    }
+    
+    func findShopData(_ index : Int) {
+        let query: NCMBQuery = NCMBQuery(className: "restaurantList")
+        query.order(byDescending: "number")
+        query.whereKey("number", equalTo: index)
+        query.findObjectsInBackground({(objects,  error) in
+            
+            if error == nil {
+                if let response = objects {
+                    if (response.count) > 0 {
+                        
+                        for i in 0 ..< 1 {
+                            let targetMemoData: AnyObject = response[i] as AnyObject
+                            var shopData = shop()
+                            shopData.objectID = (targetMemoData.object(forKey: "objectId") as? String)!
+                            shopData.shopName = (targetMemoData.object(forKey: "shopName") as? String)!
+                            shopData.shopNumber = (targetMemoData.object(forKey: "number") as? Int)!
+                            shopData.openHours = (targetMemoData.object(forKey: "openHours") as? String)!
+                            shopData.restDay = (targetMemoData.object(forKey: "restDay") as? String)!
+                            shopData.shopGeo = (targetMemoData.object(forKey: "geoPoint") as? NCMBGeoPoint)!
+                            shopData.shopLon = shopData.shopGeo.longitude
+                            shopData.shopLat = shopData.shopGeo.latitude
+                            print(shopData)
+                            self.tmpShop = shopData
+                            self.shopName.text = shopData.shopName
+                            self.openHours.text = shopData.openHours
+                            self.restDay.text = shopData.restDay
+                            self.lat = shopData.shopLat
+                            self.lon = shopData.shopLon
+                        }
+                    } else {
+                        print("there are no restaurant data")
+                    }// response.count end
+                } else {
+                    print("通信エラー")
+                }// opt bind objects
+            } else {
+                var message = "Unknown error."
+                if let description = error?.localizedDescription {
+                    message = description
+                }
+                print(message)
+                return
+            } // errors end
+            
         }) // findObjects end
     }
 
