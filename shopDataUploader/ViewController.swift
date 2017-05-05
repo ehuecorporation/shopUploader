@@ -162,17 +162,19 @@ class ViewController: UIViewController, UITextFieldDelegate{
     func showShopData(_ index: Int) {
         let dataDetail = dataList[index].components(separatedBy:",")
         var openHours_content = dataDetail[3]
-        let startIndex = openHours_content.index(openHours_content.startIndex, offsetBy: 0)
-        openHours_content.remove(at: startIndex)
-        if openHours_content[startIndex] == "[" {
-            
-        } else {
+        if openHours_content.characters.count > 4 {
+            let startIndex = openHours_content.index(openHours_content.startIndex, offsetBy: 0)
             openHours_content.remove(at: startIndex)
+            if openHours_content[startIndex] == "[" {
+                
+            } else {
+                openHours_content.remove(at: startIndex)
+            }
+            var endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
+            openHours_content.remove(at: endIndex)
+            endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
+            openHours_content.remove(at: endIndex)
         }
-        var endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
-        openHours_content.remove(at: endIndex)
-        endIndex = openHours_content.index(openHours_content.endIndex, offsetBy: -1)
-        openHours_content.remove(at: endIndex)
         shopName.text = dataDetail[0]
         openHours.text = openHours_content
         restDay.text = dataDetail[4]
