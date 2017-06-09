@@ -161,6 +161,7 @@ class ViewController: UIViewController, UITextFieldDelegate{
     
     func showShopData(_ index: Int) {
         let dataDetail = dataList[index].components(separatedBy:",")
+        print(dataDetail)
         var openHours_content = dataDetail[3]
         if openHours_content.characters.count > 4 {
             let startIndex = openHours_content.index(openHours_content.startIndex, offsetBy: 0)
